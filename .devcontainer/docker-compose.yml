@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres_dev
+    build: 
+      context: .
+      dockerfile: Postgresql.DockerFile
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: devdb
+    ports:
+      - "7586:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./Postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+    command: "postgres -c config_file=/etc/postgresql/postgresql.conf"
+    networks:
+      - devnetwork
+    restart: on-failure
+
+volumes:
+  postgres_data:
+
+networks:
+  devnetwork:
+    driver: bridge
