@@ -18,6 +18,8 @@ public class DataContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<Chat> Chats {get; set;}
+    public DbSet<Message> Messages {get;set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

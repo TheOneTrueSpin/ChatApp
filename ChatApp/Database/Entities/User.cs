@@ -12,4 +12,6 @@ public class User
     public required string IdentityProviderUId { get; set; }
     public List<RefreshToken>? RefreshTokens { get; set; }
     public List<Role>? Roles { get; set; }
+    public List<Chat>? Chats { get; set; }
+
 }
