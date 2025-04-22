@@ -6,6 +6,7 @@ using ChatApp.Shared.Repositories;
 using ChatApp.Shared.Repositories.Interfaces;
 using ChatApp.Shared.Services.Auth;
 using ChatApp.Shared.Services.Auth.IdentityProviders;
+using ChatApp.Shared.Services.ChatServices;
 using ChatApp.Shared.Utils.UnitOfWork;
 
 namespace ChatApp.Startup;
@@ -17,6 +18,7 @@ public static class DependencySetup
         // Services
         services.AddScoped<IIdentityProviderService, FirebaseAuthService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IChatService, ChatService>();
 
         // Utils
         services.AddScoped<IUnitOfWork, UnitOfWork>();

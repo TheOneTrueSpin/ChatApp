@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChatApp.Database.Entities;
+using ChatApp.Features.ChatFeatures.Dtos;
 
 
 namespace ChatApp.Shared.Services.ChatServices;
-public class ChatService
+public class ChatService:IChatService
 {
-    public async Task SendMessage(Guid chatId, string message, Guid senderId)
+    public async Task SendMessage(MessageRequestDto messageRequestDto)
     {
         throw new NotImplementedException();
     }
