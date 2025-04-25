@@ -23,13 +23,13 @@ public class RefreshTokenRepository : IRefreshTokenRepository
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
-    public void Add(RefreshToken user)
+    public void Add(RefreshToken refreshToken)
     {
-        _dataContext.Set<RefreshToken>().Add(user);
+        _dataContext.Set<RefreshToken>().Add(refreshToken);
     }
 
-    public void Remove(RefreshToken user)
+    public void Remove(RefreshToken refreshToken)
     {
-        _dataContext.Set<RefreshToken>().Remove(user);
+        _dataContext.Set<RefreshToken>().Remove(refreshToken);
     }
 }

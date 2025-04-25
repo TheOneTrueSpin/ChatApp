@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChatApp.Features.ChatFeatures.Dtos
+namespace ChatApp.Features.ChatFeatures.Dtos;
+public class MessageResponseDto
 {
-    public class MessageResponseDto
-    {
-        
-    }
+    
 }

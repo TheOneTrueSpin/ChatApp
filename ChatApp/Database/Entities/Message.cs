@@ -11,5 +11,5 @@ public class Message
     public User? Sender {get; set;}
     public required Guid SenderId {get; set;}
     public required string MessageContents {get; set;}
-    
+    public required Guid ChatId {get;set;}
 }
