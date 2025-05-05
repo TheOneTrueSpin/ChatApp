@@ -9,6 +9,7 @@ namespace ChatApp.Shared.Services.Auth;
 
 public interface IAuthService
 {
+    public Guid GetUserId();
     public string GenerateJWTToken(User user);
     public Task GenerateRefreshToken(User user);
     public Task<RefreshToken> VerifyRefreshTokenAndThrow(RefreshTokenCookie refreshTokenCookie);
