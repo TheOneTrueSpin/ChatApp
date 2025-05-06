@@ -18,8 +18,10 @@ public class ChatService:IChatService
     private readonly IMessageRepository _messageRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthService _authService;
-    public ChatService(IMessageRepository messageRepository, IUnitOfWork unitOfWork, IAuthService authService)
+    private readonly IChatRepository _chatRepository;
+    public ChatService(IMessageRepository messageRepository, IUnitOfWork unitOfWork, IAuthService authService, IChatRepository chatRepository)
     {
+        _chatRepository = chatRepository;
         _messageRepository = messageRepository;
         _unitOfWork = unitOfWork;
         _authService = authService;
@@ -32,7 +34,11 @@ public class ChatService:IChatService
         {
             throw new ApiException("The senderId does not match with the logged in user", HttpStatusCode.BadRequest);
         }
-
+        Chat? chat = await GetChat(messageRequestDto.ChatId, messageRequestDto.SenderId);
+        if (chat is null)
+        {
+            throw new ApiException("The Chat does not exist or the user is not a part of this chat", HttpStatusCode.BadRequest);
+        }
         
         Message message = new Message()
         {
@@ -45,10 +51,10 @@ public class ChatService:IChatService
         _messageRepository.Add(message);
         await _unitOfWork.SaveChangesAsync();
     }
-    public async Task<Chat> GetChat(Guid chatId, Guid userId)
+    public async Task<Chat?> GetChat(Guid chatId, Guid userId)
     {
-        //doin this for that next time
-        throw new NotImplementedException();
+        Chat? chat = await _chatRepository.GetChat(chatId, userId);
+        return chat;
     }
     public async Task NewChat(List<Guid> users)
     {
