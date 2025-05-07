@@ -18,11 +18,7 @@ public class ChatRepository:IChatRepository
     }
     public async Task<Chat?> GetChat(Guid chatId, Guid userId)
     {
-#pragma warning disable CS8604 // Possible null reference argument.
-
         Chat? chat = await _dataContext.Chats.FirstOrDefaultAsync(c => chatId == c.Id && c.Participants.Any(p => p.Id == userId));
-#pragma warning restore CS8604 // Possible null reference argument.
-
         return chat;
     }
     public void Add(Chat chat)

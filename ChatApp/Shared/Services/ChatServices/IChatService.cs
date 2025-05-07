@@ -12,6 +12,6 @@ public interface IChatService
 {
     public Task SendMessage(MessageRequestDto messageRequestDto);
     public Task<Chat?> GetChat(Guid chatId, Guid userId);
-    public  Task NewChat(List<Guid> users);
+    public  Task CreateChat(List<User> users);
 
 }

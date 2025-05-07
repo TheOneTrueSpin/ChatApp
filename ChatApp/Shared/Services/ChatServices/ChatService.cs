@@ -56,9 +56,15 @@ public class ChatService:IChatService
         Chat? chat = await _chatRepository.GetChat(chatId, userId);
         return chat;
     }
-    public async Task NewChat(List<Guid> users)
+    public async Task CreateChat(List<User> users)
     {
-        throw new NotImplementedException();
+        Chat newChat = new Chat()
+        {
+            Id = Guid.NewGuid(),
+            Participants = users
+        };
+        _chatRepository.Add(newChat);
+        await _unitOfWork.SaveChangesAsync();
     }
 
 }
