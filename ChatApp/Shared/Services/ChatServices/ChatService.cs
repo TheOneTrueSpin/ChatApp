@@ -66,5 +66,15 @@ public class ChatService:IChatService
         _chatRepository.Add(newChat);
         await _unitOfWork.SaveChangesAsync();
     }
+    public async Task<List<Message>> GetMessages(Guid chatId, Guid userId)
+    {
+        Chat? chat = await GetChat(chatId, userId);
+        if (chat is null)
+        {
+            throw new ApiException("The chat is null", HttpStatusCode.BadRequest);
+        }
+        List<Message> messages = chat.Messages;
+        return messages;
+    }
 
 }
