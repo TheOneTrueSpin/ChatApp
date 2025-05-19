@@ -31,7 +31,12 @@ public class UserRepository : IUserRepository
             .Include(u => u.Roles)
             .FirstOrDefaultAsync(u => u.IdentityProviderUId == identityProviderUId);
     }
-
+    public async Task<List<User>> GetUsersByUserIds(List<Guid> userIds)
+    {
+        return await _dataContext.Set<User>()
+            .Where(u => userIds.Contains(u.Id))
+            .ToListAsync();
+    }
     public void Add(User user)
     {
         _dataContext.Set<User>().Add(user);

@@ -1,24 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using ChatApp.Shared.Exceptions;
-using ChatApp.Shared.Utils;
-using Carter;
-using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using static ChatApp.Features.ChatFeatures.SendMessageFeature;
-using ChatApp.Features.ChatFeatures.Dtos;
-using Microsoft.AspNetCore.Http.HttpResults;
-using ChatApp.Shared.Services.ChatServices;
 
 namespace ChatApp.Features.ChatFeatures;
 
-public static class SendMessageFeature
+public static class CreateChatFeature
 {
-    public class SendMessageRequest
+    public class CreateChatRequest
     {
         public required MessageRequestDto MessageRequestDto {get;set;}
     }

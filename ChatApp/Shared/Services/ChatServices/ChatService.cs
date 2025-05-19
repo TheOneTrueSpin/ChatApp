@@ -56,12 +56,13 @@ public class ChatService:IChatService
         Chat? chat = await _chatRepository.GetChat(chatId, userId);
         return chat;
     }
-    public async Task CreateChat(List<User> users)
+    public async Task CreateChat(List<Guid> userIds)
     {
         Chat newChat = new Chat()
         {
             Id = Guid.NewGuid(),
-            Participants = users
+            Participants = userIds
+            //Needtofix
         };
         _chatRepository.Add(newChat);
         await _unitOfWork.SaveChangesAsync();
