@@ -19,13 +19,15 @@ public class ChatService:IChatService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAuthService _authService;
     private readonly IChatRepository _chatRepository;
-    public ChatService(IMessageRepository messageRepository, IUnitOfWork unitOfWork, IAuthService authService, IChatRepository chatRepository)
+    private readonly IUserRepository _userRepository;
+    public ChatService(IMessageRepository messageRepository, IUnitOfWork unitOfWork, IAuthService authService, IChatRepository chatRepository, IUserRepository userRepository)
     {
         _chatRepository = chatRepository;
         _messageRepository = messageRepository;
         _unitOfWork = unitOfWork;
         _authService = authService;
-        
+        _userRepository = userRepository;
+
     }
     public async Task SendMessage(MessageRequestDto messageRequestDto)
     {
@@ -61,8 +63,8 @@ public class ChatService:IChatService
         Chat newChat = new Chat()
         {
             Id = Guid.NewGuid(),
-            Participants = userIds
-            //Needtofix
+            Participants = await _userRepository.GetUsersByUserIds(userIds)
+            
         };
         _chatRepository.Add(newChat);
         await _unitOfWork.SaveChangesAsync();

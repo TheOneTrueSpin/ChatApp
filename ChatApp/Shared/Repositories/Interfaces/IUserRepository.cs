@@ -10,6 +10,7 @@ public interface IUserRepository
 {
     public Task<User?> GetUserByIdWithRoles(Guid id);
     public Task<User?> GetUserByIdentityProviderUIdWithRoles(string identityProviderUId);
+    public Task<List<User>> GetUsersByUserIds(List<Guid> userIds);
     public void Add(User user);
     public void Remove(User user);
 }
