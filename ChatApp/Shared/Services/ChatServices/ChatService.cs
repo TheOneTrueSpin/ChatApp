@@ -60,12 +60,24 @@ public class ChatService:IChatService
     }
     public async Task CreateChat(List<Guid> userIds)
     {
+        Guid userId = _authService.GetUserId();
+        if (!userIds.Contains(userId))
+        {
+            throw new ApiException("User does not have permission to create this group (They arnt in it)", HttpStatusCode.BadRequest);
+        }
+        List<User> participants = await _userRepository.GetUsersByUserIds(userIds);
+        if (participants.Count != userIds.Count)
+        {
+            throw new ApiException("One or more users were not returned", HttpStatusCode.BadRequest);
+        }
+        
         Chat newChat = new Chat()
         {
             Id = Guid.NewGuid(),
-            Participants = await _userRepository.GetUsersByUserIds(userIds)
+            Participants = participants
             
         };
+
         _chatRepository.Add(newChat);
         await _unitOfWork.SaveChangesAsync();
     }
