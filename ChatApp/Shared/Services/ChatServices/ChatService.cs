@@ -83,6 +83,11 @@ public class ChatService:IChatService
     }
     public async Task<List<Message>> GetMessages(Guid chatId, Guid userId)
     {
+        Guid currentUserId = _authService.GetUserId();
+        if (currentUserId != userId)
+        {
+            throw new ApiException("User is requesting messages they dont own", HttpStatusCode.BadRequest);
+        }
         Chat? chat = await GetChat(chatId, userId);
         if (chat is null)
         {

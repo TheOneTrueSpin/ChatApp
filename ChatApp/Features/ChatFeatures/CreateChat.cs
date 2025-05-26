@@ -25,6 +25,7 @@ public static class CreateChatFeature
     {
         public Validator()
         {
+            ClassLevelCascadeMode = CascadeMode.Stop;
             RuleFor(c => c.UsersIds.Count).GreaterThan(1);
             RuleFor(c => c.UsersIds.Count).LessThanOrEqualTo(10);
             RuleFor(c => c.UsersIds)
