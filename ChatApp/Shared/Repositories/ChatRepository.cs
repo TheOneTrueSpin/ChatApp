@@ -18,7 +18,7 @@ public class ChatRepository:IChatRepository
     }
     public async Task<Chat?> GetChat(Guid chatId, Guid userId)
     {
-        Chat? chat = await _dataContext.Chats.FirstOrDefaultAsync(c => chatId == c.Id && c.Participants.Any(p => p.Id == userId));
+        Chat? chat = await _dataContext.Chats.Include(c => c.Messages).FirstOrDefaultAsync(c => chatId == c.Id && c.Participants.Any(p => p.Id == userId));
         return chat;
     }
     public void Add(Chat chat)
