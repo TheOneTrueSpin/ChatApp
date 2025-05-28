@@ -8,6 +8,5 @@ public class MessageRequestDto
 {
     public required Guid ChatId {get;set;}
     public required string Message {get;set;}
-    public required Guid SenderId {get;set;}
     
 }

@@ -32,11 +32,7 @@ public class ChatService:IChatService
     public async Task SendMessage(MessageRequestDto messageRequestDto)
     {
         Guid userId = _authService.GetUserId();
-        if (userId != messageRequestDto.SenderId)
-        {
-            throw new ApiException("The senderId does not match with the logged in user", HttpStatusCode.BadRequest);
-        }
-        Chat? chat = await GetChat(messageRequestDto.ChatId, messageRequestDto.SenderId);
+        Chat? chat = await GetChat(messageRequestDto.ChatId, userId);
         if (chat is null)
         {
             throw new ApiException("The Chat does not exist or the user is not a part of this chat", HttpStatusCode.BadRequest);
@@ -47,7 +43,7 @@ public class ChatService:IChatService
             Id = Guid.NewGuid(),
             SentOnUTC = DateTime.UtcNow,
             MessageContents = messageRequestDto.Message,
-            SenderId = messageRequestDto.SenderId,
+            SenderId = userId,
             ChatId = messageRequestDto.ChatId
         };
         _messageRepository.Add(message);
