@@ -37,6 +37,11 @@ public class UserRepository : IUserRepository
             .Where(u => userIds.Contains(u.Id))
             .ToListAsync();
     }
+    public async Task<User?> GetUserByEmail(string email)
+    {
+        return await _dataContext.Set<User>()
+            .FirstOrDefaultAsync(u => u.Email == email);
+    }
     public void Add(User user)
     {
         _dataContext.Set<User>().Add(user);

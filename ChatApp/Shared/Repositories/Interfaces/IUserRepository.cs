@@ -13,4 +13,5 @@ public interface IUserRepository
     public Task<List<User>> GetUsersByUserIds(List<Guid> userIds);
     public void Add(User user);
     public void Remove(User user);
+    public Task<User?> GetUserByEmail(string email);
 }

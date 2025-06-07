@@ -13,7 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 
 
 namespace ChatApp.Shared.Services.ChatServices;
-public class ChatService:IChatService
+
+public class ChatService : IChatService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -37,7 +38,7 @@ public class ChatService:IChatService
         {
             throw new ApiException("The Chat does not exist or the user is not a part of this chat", HttpStatusCode.BadRequest);
         }
-        
+
         Message message = new Message()
         {
             Id = Guid.NewGuid(),
@@ -66,12 +67,12 @@ public class ChatService:IChatService
         {
             throw new ApiException("One or more users were not returned", HttpStatusCode.BadRequest);
         }
-        
+
         Chat newChat = new Chat()
         {
             Id = Guid.NewGuid(),
             Participants = participants
-            
+
         };
 
         _chatRepository.Add(newChat);
@@ -92,5 +93,6 @@ public class ChatService:IChatService
         List<Message> messages = chat.Messages;
         return messages;
     }
+    
 
 }

@@ -41,7 +41,7 @@ public static class GetMessageFeature
             Guid userId = _authService.GetUserId();
             List<Message> messages = await _chatService.GetMessages(chatId, userId);
             GetMessageResonse getMessageResonse = new GetMessageResonse();
-            foreach (var message in messages)
+            getMessageResonse.MessageResponseDtos = messages.Select(message =>
             {
                 MessageResponseDto currentMessage = new MessageResponseDto()
                 {
@@ -50,10 +50,25 @@ public static class GetMessageFeature
                     SenderId = message.SenderId,
                     MessageContents = message.MessageContents,
                     ChatId = message.ChatId
-                    
+
                 };
-                getMessageResonse.MessageResponseDtos.Add(currentMessage);
-            }
+                return currentMessage;
+            }).ToList();
+
+
+            // foreach (var message in messages)
+            // {
+            //     MessageResponseDto currentMessage = new MessageResponseDto()
+            //     {
+            //         Id = message.Id,
+            //         SentOnUTC = message.SentOnUTC,
+            //         SenderId = message.SenderId,
+            //         MessageContents = message.MessageContents,
+            //         ChatId = message.ChatId
+
+            //     };
+            //     getMessageResonse.MessageResponseDtos.Add(currentMessage);
+            // }
 
             return getMessageResonse;
         }
