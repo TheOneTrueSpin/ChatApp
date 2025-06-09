@@ -20,6 +20,10 @@ public static class CreateChatFeature
     {
         public required List<Guid> UsersIds { get; set; }
     }
+    public class CreateChatResponse
+    {
+        public required ChatResponseDto ChatResponseDto{ get; set; }
+    }
     //Nothing changed past here
     public class Validator : AbstractValidator<CreateChatRequest>
     {
@@ -44,10 +48,17 @@ public static class CreateChatFeature
             _chatService = chatService;
             _validator = validator;
         }
-        public async Task Handle(CreateChatRequest request, CancellationToken cancellationToken)
+        public async Task<CreateChatResponse> Handle(CreateChatRequest request, CancellationToken cancellationToken)
         {
             _validator.ValidateAndThrow(request);
-            await _chatService.CreateChat(request.UsersIds);
+            Chat chat = await _chatService.CreateChat(request.UsersIds);
+            return new CreateChatResponse()
+            {
+                ChatResponseDto = new ChatResponseDto()
+                {
+                    Id = chat.Id
+                }
+            };
         }
     }
 }
@@ -58,8 +69,8 @@ public class CreateChatEndpoint : ICarterModule
     {
         app.MapPost("api/ChatFeatures/CreateChat", async ([FromBody] CreateChatRequest request, Handler handler, CancellationToken cancellationToken) =>
         {
-            await handler.Handle(request, cancellationToken);
-            return Results.Ok();
+            CreateChatResponse chatResponse = await handler.Handle(request, cancellationToken);
+            return Results.Ok(chatResponse);
         })
         .WithTags("ChatFeatures")
         .WithMetadata(new AuthorizeAttribute { Roles = "User" })

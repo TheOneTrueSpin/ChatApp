@@ -12,7 +12,7 @@ public interface IChatService
 {
     public Task SendMessage(MessageRequestDto messageRequestDto);
     public Task<Chat?> GetChat(Guid chatId, Guid userId);
-    public  Task CreateChat(List<Guid> userIds);
+    public  Task<Chat> CreateChat(List<Guid> userIds);
     public Task<List<Message>> GetMessages(Guid chatId, Guid userId);
 
 }

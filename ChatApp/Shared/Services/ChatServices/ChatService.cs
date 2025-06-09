@@ -55,7 +55,7 @@ public class ChatService : IChatService
         Chat? chat = await _chatRepository.GetChat(chatId, userId);
         return chat;
     }
-    public async Task CreateChat(List<Guid> userIds)
+    public async Task<Chat> CreateChat(List<Guid> userIds)
     {
         Guid userId = _authService.GetUserId();
         if (!userIds.Contains(userId))
@@ -77,6 +77,7 @@ public class ChatService : IChatService
 
         _chatRepository.Add(newChat);
         await _unitOfWork.SaveChangesAsync();
+        return newChat;
     }
     public async Task<List<Message>> GetMessages(Guid chatId, Guid userId)
     {
