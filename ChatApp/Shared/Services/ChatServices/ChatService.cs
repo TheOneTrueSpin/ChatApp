@@ -55,6 +55,11 @@ public class ChatService : IChatService
         Chat? chat = await _chatRepository.GetChat(chatId, userId);
         return chat;
     }
+    public async Task<List<Chat>> GetChats(Guid userId)
+    {
+        List<Chat> chats = await _chatRepository.GetChats(userId);
+        return chats;
+    }
     public async Task<Chat> CreateChat(List<Guid> userIds)
     {
         Guid userId = _authService.GetUserId();
